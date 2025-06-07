@@ -22,6 +22,7 @@
 html,body{
     height: 100%;
     width : 100%;
+    background-color: black;
 }
 
 
@@ -118,6 +119,9 @@ nav .bolderBtn{
     display : flex;
     font-weight : 400;
 }
+nav a{
+    font-size : 1.1vw;
+}
 
 .page2{
     width : 100%;
@@ -154,4 +158,109 @@ nav .bolderBtn{
     display : flex;
     align-items: start;
     justify-content: start;
+}
+a{
+    color : white;
+    font-family: rejouice;
+    text-underline-offset: 3px;
+}
+
+
+.page3{
+    width: 100%;
+    background-color: black;
+    position: relative;
+    top: 91vh;
+    padding: 4vw 3vw;
+    height: 280vh;
+    margin-top: 50vh;
+    z-index: 1;
+}
+
+.page3 .highlights{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.page3 .bigImg{
+    width: 100%;
+    height: 120vh;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* .page3 .bigImg::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+} */
+
+.page3 .bigImg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.page3 .smallImg{
+    width: 100%;
+    height: 50vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.leftImg, .rightImg{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* .leftImg::after, .rightImg::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.712);
+    z-index: 2;
+} */
+
+.leftImg img, .rightImg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.page4{
+    width: 100%;
+    background-color: rgb(250, 248, 248);
+    position: relative;
+    top: 91vh;
+    padding: 4vw 3vw;
+    height: 200vh;
+    margin-top: 22vh;
+    
+}
+.page4 .logosDiv{
+    border-bottom : 1px solid black;
+    width : 100%;
+    height : 30%;
+    display : flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding : 3vw 0;
+    gap: 4rem;
+}
+.logosDiv img{
+    height : 22px;
+    object-fit: contain;
 }
