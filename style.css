@@ -32,7 +32,7 @@ html,body{
 #page1{
     height:100vh;
     width :100%;
-    background-color: #dadada;
+    background-color: black;
     position : relative;
 }
 #page1 video{
@@ -42,13 +42,33 @@ html,body{
     position:absolute;
 }
 
+#cursor {
+    height : 7vw;
+    width : 7vw;
+    background-color: white;
+    border-radius : 50%;
+    position : absolute;
+    z-index : 11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transform: translateY(-50%);
+    mix-blend-mode: difference;
+
+}
+#cursor h5{
+    font-size: 1.4vw;
+    font-weight : 400;
+}
+
 #page1-Content{
     height : 91%;
     width :100%;
     /* background-color: #0b0b0bce; */
     position : relative;
-    z-index:2;
-    background-color: black;
+    z-index:12;
+    background-color: transparent;
 }
 .rejouiceHeading {
     text-align: center;
@@ -103,16 +123,37 @@ nav{
     top: 0;
     left: 0;
     width: 100%;
-    /* background-color: rgba(0, 0, 0, 0.8); */
-    /* backdrop-filter: blur(10px); */
-    z-index: 100;
+    mix-blend-mode: difference;
 }
 nav .navBtn{
     display : flex;
     align-items: center;
     gap: 7px;
     font-size :.8rem;
+    cursor : pointer
 }
+
+nav .navBtn h4{
+    position: relative;
+    cursor: pointer;
+}
+
+nav .navBtn h4::after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 1px;
+    background-color: white;
+    bottom: -3px;
+    right: 0;
+    transition: width 0.3s ease;
+}
+
+nav .navBtn h4:hover::after{
+    width: 100%;
+    left: 0;
+}
+
 .navBtn #home{
     color : grey;
 }
@@ -192,6 +233,7 @@ a{
     height: 120vh;
     margin-bottom: 20px;
     position: relative;
+    overflow: hidden;
 }
 
 /* .page3 .bigImg::after{
@@ -275,10 +317,11 @@ a{
 
 }
 .videoWrapper video{
-    height : 100%;
-    width : 100%;
-    position : relative;
-    z-index : 5;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    object-fit: cover;
 }
 
 .page5{
