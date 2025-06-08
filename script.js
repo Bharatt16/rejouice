@@ -105,6 +105,10 @@ bigImg.addEventListener("mousemove",(event)=>{
 
 // Left video animations
 document.querySelector(".leftImg").addEventListener("mouseenter", function(){
+    gsap.to(".leftImg img", {
+        opacity: 0.5,
+        duration: 0.3
+    })
     gsap.to(leftVideo, {
         scale: 1,
         opacity: 1,
@@ -113,6 +117,10 @@ document.querySelector(".leftImg").addEventListener("mouseenter", function(){
 });
 
 document.querySelector(".leftImg").addEventListener("mouseleave", function(){
+    gsap.to(".leftImg img", {
+        opacity: 1,
+        duration: 0.3
+    })
     gsap.to(leftVideo, {
         scale: 0,
         opacity: 0,
@@ -136,7 +144,7 @@ document.querySelector(".leftImg").addEventListener("mousemove", (event) => {
     // Clamp the values to keep video within image boundaries
     x = Math.max(0, Math.min(x, maxX));
     y = Math.max(0, Math.min(y, maxY));
-
+  
     gsap.to(leftVideo, {
         x: x,
         y: y,
@@ -146,6 +154,10 @@ document.querySelector(".leftImg").addEventListener("mousemove", (event) => {
 
 // Right video animations
 document.querySelector(".rightImg").addEventListener("mouseenter", function(){
+    gsap.to(".rightImg img", {
+        opacity: 0.5,
+        duration: 0.3
+    })
     gsap.to(rightVideo, {
         scale: 1,
         opacity: 1,
@@ -154,6 +166,9 @@ document.querySelector(".rightImg").addEventListener("mouseenter", function(){
 });
 
 document.querySelector(".rightImg").addEventListener("mouseleave", function(){
+    gsap.to(".rightImg",{
+        opacity : 1,
+    })
     gsap.to(rightVideo, {
         scale: 0,
         opacity: 0,
@@ -185,6 +200,198 @@ document.querySelector(".rightImg").addEventListener("mousemove", (event) => {
     });
 });
 
+
+// --------------------------------------------Navigation color switching=-----------------------------------
+const nav = document.querySelector('nav');
+const whiteSections = document.querySelectorAll('.page4, .page5, .page6, .page7');
+
+function updateNavColor() {
+    const navRect = nav.getBoundingClientRect();
+    const navBottom = navRect.bottom;
+    
+    // Check if nav is over any white section
+    let isOverWhite = false;
+    whiteSections.forEach(section => {
+        const sectionRect = section.getBoundingClientRect();
+        if (navBottom > sectionRect.top && navRect.top < sectionRect.bottom) {
+            isOverWhite = true;
+        }
+    });
+    
+    // Update nav color
+    if (isOverWhite) {
+        nav.classList.remove('white-text');
+        nav.classList.add('black-text');
+    } else {
+        nav.classList.remove('black-text');
+        nav.classList.add('white-text');
+    }
+}
+
+// Initial check
+updateNavColor();
+
+// Update on scroll
+window.addEventListener('scroll', updateNavColor);
+
+
 ///--------------------------------------------------------------------------------
 //reel2 animation
 
+var videoTwo = document.querySelector(".reel2Container video");
+
+// gsap.from(videoTwo ,{
+//     scrollTrigger:{
+//         trigger:".reel2Container",
+//         markers : true,
+//         pin: true,
+//         scrub : 1,
+//         start:"top 90%",
+//     },
+//     width: "90%",
+//     y: 100, // Move down by 100 pixels
+//     // or you can use percentage
+//     // y: "20%", // Move down by 20% of its height
+//     // or you can use a function
+//     // y: (index, target) => target.offsetHeight * 0.2, // Move down by 20% of its height
+// });
+
+
+
+
+
+//--------------------locomotivejs----------------------------------------------------------------------------------->
+
+
+
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Using Locomotive Scroll from Locomotive https://github.com/locomotivemtl/locomotive-scroll
+
+const locoScroll = new LocomotiveScroll({
+  el: document.querySelector(".main"),
+  smooth: true
+});
+// each time Locomotive Scroll updates, tell ScrollTrigger to update too (sync positioning)
+locoScroll.on("scroll", ScrollTrigger.update);
+
+// tell ScrollTrigger to use these proxy methods for the ".main" element since Locomotive Scroll is hijacking things
+ScrollTrigger.scrollerProxy(".main", {
+  scrollTop(value) {
+    return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+  }, // we don't have to define a scrollLeft because we're only scrolling vertically.
+  getBoundingClientRect() {
+    return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
+  },
+  // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
+  pinType: document.querySelector(".main").style.transform ? "transform" : "fixed"
+});
+
+
+
+// each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
+ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+
+// after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
+ScrollTrigger.refresh();
+
+
+
+
+//---------------------------------Page 2 animation----------------------------.
+
+
+gsap.from(".infoPara h3", {
+    y: 50,
+    stagger: 0.2,
+    duration: 1,
+    opacity : 0,
+    scrollTrigger: {
+        trigger: ".page2",
+        scroller: ".main",
+        start: "top 47%",
+        end: "46%",
+        scrub: 2
+    }
+})
+
+var infoPara2tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".page2",
+        scroller: ".main",
+        start: "top 10%",
+        end: "top 40%",
+        scrub: 1
+    }
+});
+
+infoPara2tl.from(".leftInfo", {
+    x: -100,
+    duration: 0.5,
+    opacity: 0,
+})
+infoPara2tl.to(".line", {
+    width: "100%",
+    // duration: 
+  })
+.from(".rightInfo", {
+    x:-100,
+    duration: 0.5,
+    opacity: 0,
+}, "-=0.3")
+
+//----------------------------------page 5 animation-------------------->
+
+gsap.from(".page5 h1", {
+    x: -50,
+    duration: .5,
+    opacity: 0,
+    scrollTrigger: {
+        trigger: ".page5",
+        scroller: ".main",
+        scrub: 2,
+        start: "top 70%",
+        end: "46%",
+        markers: true
+    }
+})
+
+var page5tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".page5",
+        scroller: ".main",
+        start: "top 10%",
+        end: "top 40%",
+        // markers: true
+    }
+})
+
+page5tl
+.from(".approachOne .approachLeft", {
+    x: -50,
+    duration: .5,
+    opacity: 0,
+})
+.to(".line2",{
+    width :"100%"
+})
+.from(".approachOne .approachRight", {
+    x: -50,
+    duration: .5,
+    opacity: 0,
+}, "-=0.5")
+
+.from(".approachTwo .approachLeft", {
+    x: -50,
+    duration: .5,
+    opacity: 0,
+}, "-=0.3")
+.to(".line3",{
+    width : "100%"
+})
+.from(".approachTwo .approachRight", {
+    x: -50,
+    duration: .5,
+    opacity: 0,
+}, "-=0.5")
