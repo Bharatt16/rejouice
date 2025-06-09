@@ -304,8 +304,8 @@ var swipper = gsap.timeline({
     scrollTrigger: {
         trigger: ".swipperJS",
         scroller: ".main",
-        start: "top 70%",
-        end: "top 50%",
+        start: "top 50%",
+        end: "top 30%",
         scrub: 2,
         // markers: true
     }
@@ -437,3 +437,130 @@ document.addEventListener('click', (e) => {
         navBtn.classList.remove('active');
     }
 });
+
+
+//.--------------------------------------footer--------------------------------------->
+
+var footerAnimation = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".footer",
+        scroller: ".main",
+        start: "top 40%",
+        end: "top 20%",
+        scrub: 2,
+        // markers: true
+    }
+});
+
+footerAnimation.from(".leftDiv h2",{
+    x:-20,
+    opacity :0,
+    duration :0.2
+})
+.from(".upSideDiv .leftDetails a",{
+    x:-20,
+    opacity :0,
+    duration :0.2,
+    stagger:.1,
+},"<")
+.from(".upSideDiv .rightDetails a",{
+    x:-20,
+    opacity :0,
+    duration :0.2,
+    stagger:.1,
+},"<")
+.from(".leftDiv p",{
+    x:-20,
+    opacity :0,
+    duration :0.2
+})
+.from(".lowSideDiv .leftDetails p",{
+    x:-20,
+    opacity :0,
+    duration :0.2
+},"<")
+.from(".lowSideDiv .rightDetails",{
+    x:-20,
+    opacity :0,
+    duration :0.2
+},"<")
+
+.from(".leftDiv .email",{
+    x:-20,
+    opacity :0,
+    duration :0.2
+})
+.from(".footerBottomDiv img", {
+    y: 200,
+    duration: 0.5,
+},"-=0.3");
+
+
+//-------------------------------Loader------------------------------->
+
+var tl = gsap.timeline();
+
+tl.from(".loader h3",{
+    x:-40,
+    opacity :0,
+    duration :1,
+    stagger:0.1
+})
+tl.to(".loader h3",{
+    opacity:0,
+    x:40,
+    duration :1,
+    stagger:-0.1
+})
+tl.to(".loader",{
+    opacity :0,
+})
+tl.to(".loader",{
+    display : "none",
+})
+.from("#page1-Content",{
+    height:"0",
+    duration:1.2
+})
+.from("nav h3", {
+    y: 50,
+    opacity: 0,
+    duration: 0.2
+})
+.from(".paraDiv #para1",{
+    x:-30,
+    opacity :0,
+    duration:.2
+},"<")
+.from("nav .navBtn h4", {
+    y: 10,
+    opacity: 0,
+    duration: 0.2,
+    stagger: 0.2
+},"-=0.1")
+.from(".paraDiv #para2",{
+    x:-30,
+    opacity :0,
+    duration:.2
+},"<")
+.from("nav a", {
+    y: 50,
+    opacity: 0,
+    duration: 0.5
+}, "-=0.2")
+.from(".logo",{
+    y:-50,
+    opacity :0,
+    duration:.5
+},"-=0.5")
+
+
+
+
+//------------------------------------------------Page 1 animation-------------------->
+    
+    // var navAnimation = gsap.timeline();
+    
+    // navAnimation
+    
+    // .from(".")
