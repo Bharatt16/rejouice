@@ -1,3 +1,43 @@
+//--------------------locomotivejs----------------------------------------------------------------------------------->
+
+
+
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Using Locomotive Scroll from Locomotive https://github.com/locomotivemtl/locomotive-scroll
+
+const locoScroll = new LocomotiveScroll({
+  el: document.querySelector(".main"),
+  smooth: true
+});
+// each time Locomotive Scroll updates, tell ScrollTrigger to update too (sync positioning)
+locoScroll.on("scroll", ScrollTrigger.update);
+
+// tell ScrollTrigger to use these proxy methods for the ".main" element since Locomotive Scroll is hijacking things
+ScrollTrigger.scrollerProxy(".main", {
+  scrollTop(value) {
+    return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+  }, // we don't have to define a scrollLeft because we're only scrolling vertically.
+  getBoundingClientRect() {
+    return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
+  },
+  // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
+  pinType: document.querySelector(".main").style.transform ? "transform" : "fixed"
+});
+
+
+
+// each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
+ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+
+// after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
+ScrollTrigger.refresh();
+//--------------------------------------------------------
+// 
+// 
+// 
+// ------------------------
 //Animation for cursor 
 var video = document.querySelector("#page1 video");
 var cursor = document.querySelector("#cursor");
@@ -166,8 +206,9 @@ document.querySelector(".rightImg").addEventListener("mouseenter", function(){
 });
 
 document.querySelector(".rightImg").addEventListener("mouseleave", function(){
-    gsap.to(".rightImg",{
+    gsap.to(".rightImg img",{
         opacity : 1,
+        duration:0.3
     })
     gsap.to(rightVideo, {
         scale: 0,
@@ -236,65 +277,49 @@ window.addEventListener('scroll', updateNavColor);
 
 
 ///--------------------------------------------------------------------------------
-//reel2 animation
+//reel2 animation Page 6
 
-var videoTwo = document.querySelector(".reel2Container video");
+var videoTwo = document.querySelector(".page6 .reel2Container video");
+var reel2animationtl = gsap.timeline();
 
-// gsap.from(videoTwo ,{
-//     scrollTrigger:{
-//         trigger:".reel2Container",
-//         markers : true,
-//         pin: true,
-//         scrub : 1,
-//         start:"top 90%",
-//     },
-//     width: "90%",
-//     y: 100, // Move down by 100 pixels
-//     // or you can use percentage
-//     // y: "20%", // Move down by 20% of its height
-//     // or you can use a function
-//     // y: (index, target) => target.offsetHeight * 0.2, // Move down by 20% of its height
-// });
-
-
-
+reel2animationtl.from(videoTwo, {
+    y: 200,
+    ease: "none",
+    duration:2,
+    width : "50%",
+    scrollTrigger: {
+        trigger: ".page6",
+        scroller: ".main",
+        scrub: 1,
+        start: "top 90%",
+        end: "top 20%",
+        // markers: true,
+        // onEnter: () => console.log("ScrollTrigger entered!"),
+    }
+})
 
 
-//--------------------locomotivejs----------------------------------------------------------------------------------->
-
-
-
-
-gsap.registerPlugin(ScrollTrigger);
-
-// Using Locomotive Scroll from Locomotive https://github.com/locomotivemtl/locomotive-scroll
-
-const locoScroll = new LocomotiveScroll({
-  el: document.querySelector(".main"),
-  smooth: true
-});
-// each time Locomotive Scroll updates, tell ScrollTrigger to update too (sync positioning)
-locoScroll.on("scroll", ScrollTrigger.update);
-
-// tell ScrollTrigger to use these proxy methods for the ".main" element since Locomotive Scroll is hijacking things
-ScrollTrigger.scrollerProxy(".main", {
-  scrollTop(value) {
-    return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
-  }, // we don't have to define a scrollLeft because we're only scrolling vertically.
-  getBoundingClientRect() {
-    return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
-  },
-  // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
-  pinType: document.querySelector(".main").style.transform ? "transform" : "fixed"
+//page 4 swipper animation ----------------------------------------------->
+var swipper = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".swipperJS",
+        scroller: ".main",
+        start: "top 70%",
+        end: "top 50%",
+        scrub: 2,
+        // markers: true
+    }
 });
 
-
-
-// each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
-ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-
-// after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
-ScrollTrigger.refresh();
+swipper.to(".line4", {
+    width: "100%",
+})
+swipper.from(".textDiv p",{
+    y:50,
+    opacity : 0,
+    stagger:1,
+    
+})
 
 
 
@@ -353,7 +378,7 @@ gsap.from(".page5 h1", {
         scrub: 2,
         start: "top 70%",
         end: "46%",
-        markers: true
+        // markers: true
     }
 })
 
@@ -395,3 +420,20 @@ page5tl
     duration: .5,
     opacity: 0,
 }, "-=0.5")
+
+// Mobile Menu Toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const navBtn = document.querySelector('.navBtn');
+
+menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    navBtn.classList.toggle('active');
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!menuToggle.contains(e.target) && !navBtn.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        navBtn.classList.remove('active');
+    }
+});
