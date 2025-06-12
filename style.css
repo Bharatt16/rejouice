@@ -57,7 +57,12 @@ html,body{
     width :100%;
     object-fit:cover;
     position:absolute;
+    z-index : 1000;
 }
+/* .videoContainerReel{
+    position : relative ;
+    z-index : 5000
+} */
 
 #cursor {
     height : 7vw;
@@ -65,14 +70,13 @@ html,body{
     background-color: white;
     border-radius : 50%;
     position : absolute;
-    z-index : 11;
+    z-index : 3000;
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
     transform: translateY(-50%);
     mix-blend-mode: difference;
-
 }
 #cursor h5{
     font-size: 1.4vw;
