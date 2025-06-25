@@ -696,6 +696,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+//----------------------------Swippper js-----------------------------------------------------------
+
+var swiper = new Swiper(".mySwiper", {
+  slidesPerView: 1,
+  spaceBetween: 30,
+  speed : 4500,
+  loop: true,
+  autoplay: {
+    delay: 0,
+    disableOnInteraction: true,
+  },
+});
+
 
 //--------------------------------------------------------------------------------
 
